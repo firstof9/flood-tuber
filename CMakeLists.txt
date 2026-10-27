@@ -31,7 +31,7 @@ target_compile_definitions(${_target_name} PRIVATE
 )
 
 target_compile_options(${_target_name} PRIVATE
-    $<$<OR:$<CXX_COMPILER_ID:GNU>,$<CXX_COMPILER_ID:Clang>>:-Wno-unused-variable -Wno-unused-parameter>
+    $<$<OR:$<CXX_COMPILER_ID:GNU>,$<CXX_COMPILER_ID:Clang>,$<CXX_COMPILER_ID:AppleClang>>:-Wno-unused-variable -Wno-unused-parameter>
 )
 
 # Dependencies (libwebp)
