@@ -64,6 +64,9 @@ if(NOT TARGET OBS::libobs)
       target_link_libraries(OBS::libobs INTERFACE ${LIBOBS_LINK_LIBRARIES})
     else()
       message(STATUS "libobs not found in system paths; fetching headers from obs-studio...")
+      if(POLICY CMP0169)
+        cmake_policy(SET CMP0169 OLD)
+      endif()
       include(FetchContent)
       FetchContent_Declare(
         obs_headers
