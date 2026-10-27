@@ -5,7 +5,6 @@ on:
     branches:
       - master
       - main
-      - linux-compile
       - 'release/**'
     tags:
       - 'v*'
@@ -13,7 +12,6 @@ on:
     branches:
       - master
       - main
-      - linux-compile
 
 jobs:
   build-linux:
