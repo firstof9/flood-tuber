@@ -1,20 +1,30 @@
-name: Build Plugin
+name: Build Linux Plugin
 
 on:
   push:
-    branches: [ main, master ]
-    tags: [ 'v*' ]
+    branches:
+      - master
+      - main
+      - linux-compile
+      - 'release/**'
+    tags:
+      - 'v*'
   pull_request:
-    branches: [ main, master ]
+    branches:
+      - master
+      - main
+      - linux-compile
 
 jobs:
   build-linux:
-    name: Build Linux
-    runs-on: ubuntu-22.04
+    name: Build Linux 🐧
+    runs-on: ubuntu-24.04
 
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
 
       - name: Install dependencies
         run: |
@@ -23,7 +33,6 @@ jobs:
             build-essential \
             cmake \
             ninja-build \
-            libobs-dev \
             libwebp-dev \
             pkg-config
 
@@ -49,30 +58,3 @@ jobs:
         with:
           name: flood-tuber-linux
           path: flood-tuber-linux.tar.gz
-
-  build-windows:
-    name: Build Windows
-    runs-on: windows-latest
-
-    steps:
-      - name: Checkout repository
-        uses: actions/checkout@v4
-
-      - name: Add MSBuild to PATH
-        uses: microsoft/setup-msbuild@v2
-
-      - name: Setup OBS Studio headers / dependencies
-        shell: pwsh
-        run: |
-          # Fetch obs-studio pre-built dependencies / libobs or build with obs-studio
-          # This job configures the standard Windows build
-          Write-Host "Windows build environment setup"
-
-      - name: Configure CMake
-        run: |
-          cmake -B build -DCMAKE_BUILD_TYPE=Release
-
-      - name: Build
-        run: |
-          cmake --build build --config Release
-        continue-on-error: true
